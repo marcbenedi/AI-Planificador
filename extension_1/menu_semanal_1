@@ -1,0 +1,21 @@
+(define (problem menu_semanal_1)
+  (:domain menu_semanal)
+  (:objects
+    ; Dias de la semana
+    lunes martes miercoles jueves viernes - dia
+    ; Primeros platos
+    macarrones raviolis canelones arroz fideua espaguetis migas paella ensalada sopa - primer_plato
+    ; Segundos platos
+    escalivada filete caracoles pollo champinones tortilla albondigas salchichas lubina salmon entrecot - segundo_plato
+
+    )
+  (:init
+
+    ; Incompatibilidades
+    (incompatible paella champinones)
+    (incompatible migas lubina)
+    (incompatible sopa tortilla)
+    )
+
+  (:goal (forall (?dia - dia) (tiene_menu ?dia)))
+  )
