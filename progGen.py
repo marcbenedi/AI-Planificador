@@ -41,6 +41,8 @@ if (int(sys.argv[3]) > 5):
     print("<num_dias_plato_fijo> has to be 5 or less, but {0} found\n  Usage: python3 proGen.py <num_extension> <num_incompatibilities> <num_dias_plato_fijo>".format(sys.argv[3]))
     sys.exit()
 
+num_ext = int(sys.argv[1])
+
 listaPlatos = []
 listaPlatos.append(Plato("Arroz tres delicias"            ,Ordinal.PRIMERO,Tipo.ARROZ,5.75,450))
 listaPlatos.append(Plato("Arroz con lentejas"             ,Ordinal.PRIMERO,Tipo.ARROZ,4   ,350))
@@ -112,99 +114,136 @@ listaPlatos.append(Plato("Ensalada con frutos secos"         ,Ordinal.PRIMERO,Ti
 listaPlatos.append(Plato("Ensalada de moras y queso de cabra",Ordinal.PRIMERO,Tipo.ENSALADA,7   ,350))
 listaPlatos.append(Plato("Ensalada de la huerta"             ,Ordinal.PRIMERO,Tipo.ENSALADA,5   ,250))
 
+dias_semana = ["lunes", "martes", "miercoles", "jueves", "viernes", "null_day"]
+
 f = open("ext{}.prob".format(sys.argv[1]),'w')
 
-#def header():
-inicio = """(define (problem ext{0}_prob)
-  (:domain ext{0}_dom)
-  (:objects
+def header():
+    inicio = """(define (problem ext{0}_prob)
+    (:domain ext{0}_dom)
+    (:objects
     ; Dias de la semana
     lunes martes miercoles jueves viernes null_day - dia
 
     ; Primeros platos
     """.format(sys.argv[1])
 
-f.write(inicio)
+    f.write(inicio)
 
-for p in [p for p in listaPlatos if p.ordinal == Ordinal.PRIMERO]:
-    f.write(p.getFormattedName()+" ")
+    for p in [p for p in listaPlatos if p.ordinal == Ordinal.PRIMERO]:
+        f.write(p.getFormattedName()+" ")
 
-f.write("- primer_plato\n\n")
+    f.write("- primer_plato\n\n")
 
-f.write("""    ; Segundos platos
+    f.write("""    ; Segundos platos
     """)
 
-for p in [p for p in listaPlatos if p.ordinal == Ordinal.SEGUNDO]:
-    f.write(p.getFormattedName()+" ")
+    for p in [p for p in listaPlatos if p.ordinal == Ordinal.SEGUNDO]:
+        f.write(p.getFormattedName()+" ")
 
-f.write("- segundo_plato\n\n")
+    f.write("- segundo_plato\n\n")
 
-f.write("""    ; Tipos de plato
+    f.write("""    ; Tipos de plato
     """)
 
-for p in [p for p in Tipo]:
-    f.write(p.getFormattedName()+" ")
+    for p in [p for p in Tipo]:
+        f.write(p.getFormattedName()+" ")
 
-f.write("- tipo_plato\n\n")
+    f.write("- tipo_plato\n\n")
 
  # ----------- INIT -------------
 
-f.write("""  )
-  (:init\n\n""")
+def openInit():
+    f.write("""    )
+    (:init\n\n""")
 
-dias_semana = ["lunes", "martes", "miercoles", "jueves", "viernes", "null_day"]
-f.write("  ; Dia siguiente\n")
-for i in range(len(dias_semana)-1):
-    f.write("  (dia_siguiente {0} {1})\n".format(dias_semana[i], dias_semana[i+1]))
+def diaSiguiente():
+    f.write("    ; Dia siguiente\n")
+    for i in range(len(dias_semana)-1):
+        f.write("    (dia_siguiente {0} {1})\n".format(dias_semana[i], dias_semana[i+1]))
+    f.write("\n\n")
 
-f.write("\n\n")
+def tiposPlato():
+    f.write("    ; Tipos de plato\n")
+    for p in listaPlatos:
+        f.write("    (tiene_tipo {0} {1})\n".format(p.getFormattedName(), p.getFormattedType() ))
+    f.write("\n\n")
 
-f.write("  ; Tipos de plato\n")
-for p in listaPlatos:
-    f.write("  (tiene_tipo {0} {1})\n".format(p.getFormattedName(), p.getFormattedType() ))
+def precioPlatos():
+    f.write("    ; Precio\n")
+    for p in listaPlatos:
+        f.write("    ;(precio {0} {1})\n".format(p.getFormattedName(), p.precio ))
+    f.write("\n\n")
 
-f.write("\n\n")
 
-f.write("  ; Precio\n")
-for p in listaPlatos:
-    f.write("  ;(precio {0} {1})\n".format(p.getFormattedName(), p.precio ))
+def caloriasPlatos():
+    f.write("    ; Calorias\n")
+    for p in listaPlatos:
+        f.write("    ;(calorias {0} {1})\n".format(p.getFormattedName(), p.calorias ))
+    f.write("\n\n")
 
-f.write("\n\n")
+def incompatiblesPlatos():
+    f.write("    ; Incompatibilidades\n")
+    for i in range(int(sys.argv[2])):
+        f.write("    (incompatible {0} {1})\n".format( \
+        random.choice([p for p in listaPlatos if p.ordinal == Ordinal.PRIMERO]).getFormattedName(),
+        random.choice([p for p in listaPlatos if p.ordinal == Ordinal.SEGUNDO]).getFormattedName()
+        ))
+    f.write("\n\n")
 
-f.write("  ; Calorias\n")
-for p in listaPlatos:
-    f.write("  ;(calorias {0} {1})\n".format(p.getFormattedName(), p.calorias ))
+def diasFijos():
+    f.write("    ; Dias fijos\n")
+    dias_posibles = dias_semana[:-1]
+    for i in range(int(sys.argv[3])):
+        index_dia_chosen = random.choice(range(len(dias_posibles)))
+        index_plato_chosen = random.choice(range(len(listaPlatos)))
+        f.write("    (plato_fijo {0} {1})\n".format( \
+        listaPlatos[index_plato_chosen].getFormattedName(),
+        dias_posibles[index_dia_chosen]
+        ))
+        f.write("    (cocinado {})\n".format(listaPlatos[index_plato_chosen].getFormattedName()))
+        #f.write("  ({0} {1} {2})\n".format(listaPlatos[index_plato_chosen].getFormattedName()))
+        del dias_posibles[index_dia_chosen]
+        del listaPlatos[index_plato_chosen]
+    f.write("\n\n")
 
-f.write("\n\n")
+def closeInit():
+    f.write("\n  ) ; Closing :init\n\n")
 
-f.write("  ; Incompatibilidades\n")
-for i in range(int(sys.argv[2])):
-    f.write("  (incompatible {0} {1})\n".format( \
-    random.choice([p for p in listaPlatos if p.ordinal == Ordinal.PRIMERO]).getFormattedName(),
-    random.choice([p for p in listaPlatos if p.ordinal == Ordinal.SEGUNDO]).getFormattedName()
-    ))
+def goal():
+    f.write("  (:goal\n")
+    f.write("    (forall (?dia - dia) (tiene_menu ?dia))\n")
+    f.write("  ) ; Closing :goal\n")
 
-f.write("\n\n")
-f.write("  ; Dias fijos\n")
-dias_posibles = dias_semana[:-1]
-for i in range(int(sys.argv[3])):
-    index_dia_chosen = random.choice(range(len(dias_posibles)))
-    index_plato_chosen = random.choice(range(len(listaPlatos)))
-    f.write("  (plato_fijo {0} {1})\n".format( \
-    listaPlatos[index_plato_chosen].getFormattedName(),
-    dias_posibles[index_dia_chosen]
-    ))
-    f.write("  (cocinado {})\n".format(listaPlatos[index_plato_chosen].getFormattedName()))
-    #f.write("  ({0} {1} {2})\n".format(listaPlatos[index_plato_chosen].getFormattedName()))
-    del dias_posibles[index_dia_chosen]
-    del listaPlatos[index_plato_chosen]
+def closeFile():
+    f.close()
 
-f.write("\n  ) ; Closing :init")
+def closeDefine():
+    f.write(") ; Closing define\n")
 
-f.write("\n\n")
+def main():
+    header()
+    openInit()
 
-f.write("  (:goal\n")
-f.write("    (forall (?dia - dia) (tiene_menu ?dia))\n")
-f.write("  ) ; Closing :goal")
+    incompatiblesPlatos()
 
-f.close()
+    if num_ext >= 2:
+        diaSiguiente()
+        tiposPlato()
+
+    if num_ext >= 3:
+        diasFijos()
+
+    if num_ext >= 4:
+        caloriasPlatos()
+
+    if num_ext >= 5:
+        precioPlatos()
+
+    closeInit()
+    goal()
+    closeDefine()
+    closeFile()
+
+#RUN
+main()
