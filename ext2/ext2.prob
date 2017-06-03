@@ -8,7 +8,7 @@
     ; Segundos platos
     escalivada filete caracoles pollo champinones tortilla albondigas salchichas lubina salmon entrecot - segundo_plato
     ; Tipos de plato
-    arroz pasta sopa pescado cane huevo ensalada - tipo_plato
+    arroz pasta sopa pescado carne huevo ensalada - tipo_plato
     )
   (:init
 
@@ -19,10 +19,10 @@
 
     ; Relacion de los dias de la semana
     (primer_dia lunes)
-    (consecutivo lunes martes)
-    (consecutivo martes miercoles)
-    (consecutivo miercoles jueves)
-    (consecutivo jueves viernes)
+    (dia_consecutivo lunes martes)
+    (dia_consecutivo martes miercoles)
+    (dia_consecutivo miercoles jueves)
+    (dia_consecutivo jueves viernes)
 
     ; Tipo de platos
     (tiene_tipo escudella sopa)
@@ -36,7 +36,7 @@
     (tiene_tipo paella pescado)
     (tiene_tipo ensalada ensalada)
     (tiene_tipo sopa sopa)
-    (tiene_tipo escalivada
+    (tiene_tipo escalivada ensalada)
     (tiene_tipo filete carne)
     (tiene_tipo caracoles carne)
     (tiene_tipo pollo carne)
