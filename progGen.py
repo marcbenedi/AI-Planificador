@@ -114,7 +114,7 @@ listaPlatos.append(Plato("Ensalada con frutos secos"         ,Ordinal.PRIMERO,Ti
 listaPlatos.append(Plato("Ensalada de moras y queso de cabra",Ordinal.PRIMERO,Tipo.ENSALADA,7   ,350))
 listaPlatos.append(Plato("Ensalada de la huerta"             ,Ordinal.PRIMERO,Tipo.ENSALADA,5   ,250))
 
-dias_semana = ["lunes", "martes", "miercoles", "jueves", "viernes", "null_day"]
+dias_semana = ["lunes", "martes", "miercoles", "jueves", "viernes"]
 
 f = open("ext{}.prob".format(sys.argv[1]),'w')
 
@@ -123,7 +123,7 @@ def header():
     (:domain ext{0}_dom)
     (:objects
     ; Dias de la semana
-    lunes martes miercoles jueves viernes null_day - dia
+    lunes martes miercoles jueves viernes - dia
 
     ; Primeros platos
     """.format(sys.argv[1])
@@ -159,8 +159,9 @@ def openInit():
 
 def diaSiguiente():
     f.write("    ; Dia siguiente\n")
+    f.write("    (primer_dia lunes)\n")
     for i in range(len(dias_semana)-1):
-        f.write("    (dia_siguiente {0} {1})\n".format(dias_semana[i], dias_semana[i+1]))
+        f.write("    (dia_consecutivo {0} {1})\n".format(dias_semana[i], dias_semana[i+1]))
     f.write("\n\n")
 
 def tiposPlato():
@@ -193,7 +194,7 @@ def incompatiblesPlatos():
 
 def diasFijos():
     f.write("    ; Dias fijos\n")
-    dias_posibles = dias_semana[:-1]
+    dias_posibles = dias_semana
     for i in range(int(sys.argv[3])):
         index_dia_chosen = random.choice(range(len(dias_posibles)))
         index_plato_chosen = random.choice(range(len(listaPlatos)))
