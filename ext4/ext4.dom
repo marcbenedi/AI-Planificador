@@ -1,5 +1,5 @@
-(define (domain ext3_dom)
-  (:requirements :adl :typing :equality)
+(define (domain ext4_dom)
+  (:requirements :adl :typing :equality :fluents)
 
   (:types
     ; tipo de platos
@@ -10,6 +10,10 @@
     ; subtipos de plato
     primer_plato - plato
     segundo_plato - plato
+    )
+    (:functions
+      (calorias_dia ?d - dia)
+      (calorias_plato ?p - plato)
     )
 
   (:predicates
@@ -46,6 +50,7 @@
     :effect (and
                 (cocinado ?plato_fijo)
                 (primero ?dia ?plato_fijo)
+              ;  (increase (calorias_dia ?dia) (calorias_plato ?plato_fijo))
               )
 
   )
@@ -59,6 +64,7 @@
               (and
                 (cocinado ?plato_fijo)
                 (segundo ?dia ?plato_fijo)
+              ;  (increase (calorias_dia ?dia) (calorias_plato ?plato_fijo))
               )
   )
 
@@ -78,6 +84,8 @@
                            (not (incompatible ?primero ?segundo))
                            (not (cocinado ?primero))
                            (not (cocinado ?segundo))
+                           (>= (+ (calorias_plato ?primero) (calorias_plato ?segundo) ) 1000)
+                           (<= (+ (calorias_plato ?primero) (calorias_plato ?segundo) ) 1500)
                            (tiene_tipo ?primero ?t_primero)
                            (tiene_tipo ?segundo ?t_segundo)
                            (or
@@ -123,6 +131,8 @@
                            (not (tiene_menu ?dia))
                            (not (incompatible ?plato_fijo ?segundo))
                            (not (cocinado ?segundo))
+                           (>= (+ (calorias_plato ?plato_fijo) (calorias_plato ?segundo) ) 1000)
+                           (<= (+ (calorias_plato ?plato_fijo) (calorias_plato ?segundo) ) 1500)
                            (tiene_tipo ?plato_fijo ?t_primero)
                            (tiene_tipo ?segundo ?t_segundo)
                            (or
@@ -162,6 +172,8 @@
                            (not (tiene_menu ?dia))
                            (not (incompatible ?primero ?plato_fijo))
                            (not (cocinado ?primero))
+                           (>= (+ (calorias_plato ?plato_fijo) (calorias_plato ?primero) ) 1000)
+                           (<= (+ (calorias_plato ?plato_fijo) (calorias_plato ?primero) ) 1500)
                            (tiene_tipo ?primero ?t_primero)
                            (tiene_tipo ?plato_fijo ?t_segundo)
                            (or

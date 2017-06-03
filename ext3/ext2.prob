@@ -1,5 +1,5 @@
-(define (problem ext2_prob)
-    (:domain ext2_dom)
+(define (problem ext3_prob)
+    (:domain ext3_dom)
     (:objects
     ; Dias de la semana
     lunes martes miercoles jueves viernes - dia

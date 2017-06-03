@@ -1,4 +1,4 @@
-(define (domain menu_semanal)
+(define (domain ext2_dom)
   (:requirements :adl :typing :equality)
 
   (:types

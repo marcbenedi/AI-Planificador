@@ -22,7 +22,7 @@ class Plato:
         self.nombre = nombre
         self.ordinal = ordinal
         self.tipo = tipo
-        self.precio = precio
+        self.precio = round(precio)
         self.calorias = calorias
 
     def __repr__(self):
@@ -172,15 +172,22 @@ def tiposPlato():
 
 def precioPlatos():
     f.write("    ; Precio\n")
+    f.write("    (= (precio_total) 0)\n")
     for p in listaPlatos:
-        f.write("    ;(precio {0} {1})\n".format(p.getFormattedName(), p.precio ))
+        f.write("    (= (precio_plato {0}) {1})\n".format(p.getFormattedName(), p.precio ))
     f.write("\n\n")
 
 
 def caloriasPlatos():
-    f.write("    ; Calorias\n")
+    f.write("    ; Calorias platos\n")
     for p in listaPlatos:
-        f.write("    ;(calorias {0} {1})\n".format(p.getFormattedName(), p.calorias ))
+        f.write("    (= (calorias_plato {0}) {1})\n".format(p.getFormattedName(), p.calorias ))
+    f.write("\n\n")
+
+def caloriasDiasSemana():
+    f.write("    ; Calorias dias semana\n")
+    for p in ["lunes", "martes", "miercoles", "jueves", "viernes"]:
+        f.write("    (= (calorias_dia {0}) 0)\n".format(p))
     f.write("\n\n")
 
 def incompatiblesPlatos():
@@ -202,7 +209,7 @@ def diasFijos():
         listaPlatos[index_plato_chosen].getFormattedName(),
         dias_posibles[index_dia_chosen]
         ))
-        f.write("    (cocinado {})\n".format(listaPlatos[index_plato_chosen].getFormattedName()))
+        #f.write("    (cocinado {})\n".format(listaPlatos[index_plato_chosen].getFormattedName()))
         #f.write("  ({0} {1} {2})\n".format(listaPlatos[index_plato_chosen].getFormattedName()))
         del dias_posibles[index_dia_chosen]
         del listaPlatos[index_plato_chosen]
@@ -237,6 +244,7 @@ def main():
 
     if num_ext >= 4:
         caloriasPlatos()
+        caloriasDiasSemana()
 
     if num_ext >= 5:
         precioPlatos()
