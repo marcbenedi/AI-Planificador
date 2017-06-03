@@ -1,0 +1,56 @@
+(define (problem menu_semanal_1)
+  (:domain menu_semanal)
+  (:objects
+    ; Dias de la semana
+    lunes martes miercoles jueves viernes - dia
+    ; Primeros platos
+    escudella macarrones raviolis canelones arroz fideua espaguetis migas paella ensalada sopa - primer_plato
+    ; Segundos platos
+    escalivada filete caracoles pollo champinones tortilla albondigas salchichas lubina salmon entrecot - segundo_plato
+    ; Tipos de plato
+    arroz pasta sopa pescado carne huevo ensalada - tipo_plato
+    )
+  (:init
+
+    ; Incompatibilidades
+    (incompatible paella champinones)
+    (incompatible migas lubina)
+    (incompatible sopa tortilla)
+
+    ; Relacion de los dias de la semana
+    (primer_dia lunes)
+    (dia_consecutivo lunes martes)
+    (dia_consecutivo martes miercoles)
+    (dia_consecutivo miercoles jueves)
+    (dia_consecutivo jueves viernes)
+
+    ; Tipo de platos
+    (tiene_tipo escudella sopa)
+    (tiene_tipo macarrones pasta)
+    (tiene_tipo raviolis pasta)
+    (tiene_tipo canelones carne)
+    (tiene_tipo arroz arroz)
+    (tiene_tipo fideua pasta)
+    (tiene_tipo espaguetis pasta)
+    (tiene_tipo migas carne)
+    (tiene_tipo paella pescado)
+    (tiene_tipo ensalada ensalada)
+    (tiene_tipo sopa sopa)
+    (tiene_tipo escalivada ensalada)
+    (tiene_tipo filete carne)
+    (tiene_tipo caracoles carne)
+    (tiene_tipo pollo carne)
+    (tiene_tipo champinones ensalada)
+    (tiene_tipo tortilla huevo)
+    (tiene_tipo albondigas carne)
+    (tiene_tipo salchichas carne)
+    (tiene_tipo lubina pescado)
+    (tiene_tipo salmon  pescado)
+    (tiene_tipo entrecot carne)
+
+  ;  (plato_fijo escudella lunes)
+
+    )
+
+  (:goal (forall (?dia - dia) (tiene_menu ?dia)))
+  )
