@@ -1,0 +1,38 @@
+(define (problem ext1_prob)
+    (:domain ext1_dom)
+    (:objects
+    ; Dias de la semana
+    lunes martes miercoles jueves viernes - dia
+
+    ; Primeros platos
+    rissoto_de_vegetales ensalada_cesar pure_de_verduras lasagne_de_espinacas ensalada_tropical arroz_al_curry pasta_a_escoger_con_salsa_especial sopa_de_verduras sopa_de_marisco arroz_con_bogavante tortellini_a_la_provenzana arroz_tres_delicias espaguetis_a_la_bolognese macarrones_al_pesto sopa_de_apio sopa_de_galets rissoto_de_setas arroz_integral_con_quinoa sopa_de_caldo ensalada_de_arroz_con_legumbres pure_de_calabaza canelones_de_salmon_ahumado estofado_de_ternera ensalada_mediterranea verduras_a_la_brasa arroz_con_conejo pasta_fresca_al_pomodoro arroz_basmati ensalada_de_espinacas ensalada_con_frutos_secos sopa_de_setas ensalada_de_lentejas espirales_con_frutos_rojos ensalada_de_la_huerta ensalada_de_garbanzos sopa_de_ajo ravioli_funghi ensalada_de_moras_y_queso_de_cabra ensalada_de_pasta_y_verduras ensalada_campera caldo_casero arroz_con_lentejas - primer_plato
+
+    ; Segundos platos
+    lubina_con_albahaca sardinillas_marinadas carpaccio_de_ternera fideua_de_pescado potaje_de_vigilia pollo_al_limon chuletillas_de_cerdo pollo_al_chilindron merluza_a_la_plancha pollo_al_ast albondigas_a_la_jardinera pastelitos_de_salmon entrecot_de_ternera carne_rebozada filete_de_salmon tortilla_de_patata alitas_de_pollo bacalao_a_la_vizcaina sepia_en_su_tinta calamares_a_la_romana huevos_revueltos pies_de_cerdo paella_de_pescado fabada_asturiana - segundo_plato
+
+    ; Tipos de plato
+    arroz pasta sopa pescado carne ensalada huevo legumbre verdura - tipo_plato
+
+    )
+    (:init
+
+    ; Incompatibilidades
+    (incompatible ensalada_cesar sardinillas_marinadas)
+    (incompatible sopa_de_setas calamares_a_la_romana)
+    (incompatible ensalada_con_frutos_secos entrecot_de_ternera)
+    (incompatible sopa_de_verduras paella_de_pescado)
+    (incompatible pure_de_verduras paella_de_pescado)
+    (incompatible arroz_basmati paella_de_pescado)
+    (incompatible pasta_fresca_al_pomodoro lubina_con_albahaca)
+    (incompatible macarrones_al_pesto potaje_de_vigilia)
+    (incompatible ensalada_de_arroz_con_legumbres fideua_de_pescado)
+    (incompatible sopa_de_caldo pollo_al_chilindron)
+
+
+
+  ) ; Closing :init
+
+  (:goal
+    (forall (?dia - dia) (tiene_menu ?dia))
+  ) ; Closing :goal
+) ; Closing define

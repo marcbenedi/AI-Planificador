@@ -1,0 +1,31 @@
+(define (problem ext0_prob)
+    (:domain ext0_dom)
+    (:objects
+    ; Dias de la semana
+    lunes martes miercoles jueves viernes - dia
+
+    ; Primeros platos
+    arroz_basmati macarrones_al_pesto sopa_de_setas ensalada_de_moras_y_queso_de_cabra ensalada_con_frutos_secos canelones_de_salmon_ahumado arroz_tres_delicias pasta_fresca_al_pomodoro estofado_de_ternera ensalada_de_la_huerta ensalada_de_pasta_y_verduras ensalada_campera lasagne_de_espinacas pasta_a_escoger_con_salsa_especial arroz_con_conejo arroz_con_bogavante sopa_de_galets ensalada_mediterranea ensalada_tropical rissoto_de_vegetales arroz_integral_con_quinoa sopa_de_ajo caldo_casero rissoto_de_setas sopa_de_caldo ensalada_de_garbanzos pure_de_verduras tortellini_a_la_provenzana verduras_a_la_brasa ensalada_de_lentejas sopa_de_marisco sopa_de_verduras arroz_con_lentejas ensalada_de_arroz_con_legumbres ensalada_cesar espaguetis_a_la_bolognese pure_de_calabaza sopa_de_apio ensalada_de_espinacas ravioli_funghi arroz_al_curry espirales_con_frutos_rojos - primer_plato
+
+    ; Segundos platos
+    carpaccio_de_ternera huevos_revueltos calamares_a_la_romana pollo_al_ast fabada_asturiana sardinillas_marinadas chuletillas_de_cerdo merluza_a_la_plancha fideua_de_pescado sepia_en_su_tinta albondigas_a_la_jardinera paella_de_pescado alitas_de_pollo pollo_al_limon carne_rebozada filete_de_salmon lubina_con_albahaca pastelitos_de_salmon pollo_al_chilindron bacalao_a_la_vizcaina pies_de_cerdo entrecot_de_ternera potaje_de_vigilia tortilla_de_patata - segundo_plato
+
+    ; Tipos de plato
+    arroz pasta sopa pescado carne ensalada huevo legumbre verdura - tipo_plato
+
+    )
+    (:init
+
+    ; Incompatibilidades
+    (incompatible sopa_de_caldo carne_rebozada)
+    (incompatible sopa_de_galets pastelitos_de_salmon)
+    (incompatible canelones_de_salmon_ahumado chuletillas_de_cerdo)
+
+
+
+  ) ; Closing :init
+
+  (:goal
+    (forall (?dia - dia) (tiene_menu ?dia))
+  ) ; Closing :goal
+) ; Closing define

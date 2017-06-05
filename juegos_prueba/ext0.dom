@@ -1,0 +1,30 @@
+(define (domain menu_semanal)
+  (:requirements :typing)
+
+  (:types
+    dia - object
+    primer_plato - object
+    segundo_plato - object
+    )
+
+  (:predicates
+    ; el primer plato 'primero' es incompatible con el segundo plato 'segundo'
+    (incompatible ?primero - primer_plato ?segundo - segundo_plato)
+    ; el dia 'dia' tiene como primer plato 'primero' y como segundo 'segundo'
+    (menu_dia ?dia - dia ?primero - primer_plato ?segundo - segundo_plato)
+    ; el dia 'dia' tiene un menu asignado
+    (tiene_menu ?dia - dia)
+    )
+
+  (:action preparar_menu
+           :parameters (?dia - dia ?primero - primer_plato ?segundo - segundo_plato)
+           :precondition (and
+                           (not (tiene_menu ?dia))
+                           (not (incompatible ?primero ?segundo))
+                           )
+           :effect  (and
+                       (tiene_menu ?dia)
+                       (menu_dia ?dia ?primero ?segundo)
+                       )
+           )
+  )

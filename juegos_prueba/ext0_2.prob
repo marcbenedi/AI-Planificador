@@ -1,0 +1,38 @@
+(define (problem ext0_prob)
+    (:domain ext0_dom)
+    (:objects
+    ; Dias de la semana
+    lunes martes miercoles jueves viernes - dia
+
+    ; Primeros platos
+    espirales_con_frutos_rojos tortellini_a_la_provenzana ensalada_de_lentejas espaguetis_a_la_bolognese ensalada_de_pasta_y_verduras sopa_de_verduras caldo_casero ensalada_campera sopa_de_setas ravioli_funghi arroz_con_conejo arroz_integral_con_quinoa ensalada_mediterranea canelones_de_salmon_ahumado rissoto_de_setas verduras_a_la_brasa arroz_con_bogavante arroz_tres_delicias ensalada_tropical arroz_al_curry pasta_a_escoger_con_salsa_especial pure_de_verduras sopa_de_apio estofado_de_ternera pasta_fresca_al_pomodoro arroz_con_lentejas sopa_de_caldo sopa_de_galets ensalada_de_arroz_con_legumbres pure_de_calabaza macarrones_al_pesto ensalada_con_frutos_secos rissoto_de_vegetales ensalada_de_espinacas sopa_de_ajo ensalada_cesar sopa_de_marisco ensalada_de_la_huerta arroz_basmati lasagne_de_espinacas ensalada_de_garbanzos ensalada_de_moras_y_queso_de_cabra - primer_plato
+
+    ; Segundos platos
+    potaje_de_vigilia bacalao_a_la_vizcaina lubina_con_albahaca alitas_de_pollo fabada_asturiana chuletillas_de_cerdo albondigas_a_la_jardinera sepia_en_su_tinta pollo_al_ast paella_de_pescado pollo_al_chilindron tortilla_de_patata huevos_revueltos carne_rebozada filete_de_salmon sardinillas_marinadas pies_de_cerdo merluza_a_la_plancha carpaccio_de_ternera pastelitos_de_salmon pollo_al_limon fideua_de_pescado entrecot_de_ternera calamares_a_la_romana - segundo_plato
+
+    ; Tipos de plato
+    arroz pasta sopa pescado carne ensalada huevo legumbre verdura - tipo_plato
+
+    )
+    (:init
+
+    ; Incompatibilidades
+    (incompatible ensalada_de_garbanzos albondigas_a_la_jardinera)
+    (incompatible ensalada_mediterranea alitas_de_pollo)
+    (incompatible tortellini_a_la_provenzana huevos_revueltos)
+    (incompatible ensalada_de_espinacas lubina_con_albahaca)
+    (incompatible sopa_de_verduras pollo_al_ast)
+    (incompatible ensalada_de_arroz_con_legumbres alitas_de_pollo)
+    (incompatible arroz_con_conejo fabada_asturiana)
+    (incompatible ensalada_de_arroz_con_legumbres merluza_a_la_plancha)
+    (incompatible lasagne_de_espinacas albondigas_a_la_jardinera)
+    (incompatible ensalada_de_espinacas chuletillas_de_cerdo)
+
+
+
+  ) ; Closing :init
+
+  (:goal
+    (forall (?dia - dia) (tiene_menu ?dia))
+  ) ; Closing :goal
+) ; Closing define

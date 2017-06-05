@@ -1,0 +1,181 @@
+(define (problem ext4_prob)
+    (:domain ext4_dom)
+    (:objects
+    ; Dias de la semana
+    lunes martes miercoles jueves viernes - dia
+
+    ; Primeros platos
+    arroz_al_curry ensalada_con_frutos_secos ensalada_de_moras_y_queso_de_cabra arroz_basmati lasagne_de_espinacas ensalada_de_la_huerta ensalada_de_lentejas verduras_a_la_brasa pure_de_calabaza ensalada_de_espinacas pasta_a_escoger_con_salsa_especial canelones_de_salmon_ahumado ensalada_de_arroz_con_legumbres pasta_fresca_al_pomodoro ensalada_campera rissoto_de_setas arroz_tres_delicias sopa_de_galets sopa_de_verduras caldo_casero ensalada_tropical sopa_de_caldo estofado_de_ternera macarrones_al_pesto espirales_con_frutos_rojos arroz_con_conejo ravioli_funghi arroz_con_bogavante ensalada_de_garbanzos ensalada_mediterranea tortellini_a_la_provenzana pure_de_verduras sopa_de_setas rissoto_de_vegetales ensalada_de_pasta_y_verduras ensalada_cesar arroz_con_lentejas espaguetis_a_la_bolognese arroz_integral_con_quinoa sopa_de_apio sopa_de_ajo sopa_de_marisco - primer_plato
+
+    ; Segundos platos
+    fideua_de_pescado lubina_con_albahaca calamares_a_la_romana paella_de_pescado albondigas_a_la_jardinera carne_rebozada pollo_al_limon pollo_al_chilindron pies_de_cerdo bacalao_a_la_vizcaina fabada_asturiana sardinillas_marinadas tortilla_de_patata chuletillas_de_cerdo potaje_de_vigilia pastelitos_de_salmon merluza_a_la_plancha sepia_en_su_tinta carpaccio_de_ternera pollo_al_ast filete_de_salmon entrecot_de_ternera huevos_revueltos alitas_de_pollo - segundo_plato
+
+    ; Tipos de plato
+    arroz pasta sopa pescado carne ensalada huevo legumbre verdura - tipo_plato
+
+    )
+    (:init
+
+    ; Incompatibilidades
+    (incompatible arroz_tres_delicias bacalao_a_la_vizcaina)
+    (incompatible sopa_de_caldo huevos_revueltos)
+    (incompatible arroz_con_lentejas pies_de_cerdo)
+
+
+    ; Dia siguiente
+    (primer_dia lunes)
+    (dia_consecutivo lunes martes)
+    (dia_consecutivo martes miercoles)
+    (dia_consecutivo miercoles jueves)
+    (dia_consecutivo jueves viernes)
+    (ultimo_dia viernes)
+
+
+    ; Tipos de plato
+    (tiene_tipo arroz_al_curry arroz)
+    (tiene_tipo fideua_de_pescado pescado)
+    (tiene_tipo ensalada_con_frutos_secos ensalada)
+    (tiene_tipo lubina_con_albahaca pescado)
+    (tiene_tipo ensalada_de_moras_y_queso_de_cabra ensalada)
+    (tiene_tipo calamares_a_la_romana pescado)
+    (tiene_tipo paella_de_pescado pescado)
+    (tiene_tipo arroz_basmati arroz)
+    (tiene_tipo albondigas_a_la_jardinera carne)
+    (tiene_tipo lasagne_de_espinacas pasta)
+    (tiene_tipo ensalada_de_la_huerta ensalada)
+    (tiene_tipo carne_rebozada carne)
+    (tiene_tipo ensalada_de_lentejas ensalada)
+    (tiene_tipo pollo_al_limon carne)
+    (tiene_tipo pollo_al_chilindron carne)
+    (tiene_tipo verduras_a_la_brasa verdura)
+    (tiene_tipo pies_de_cerdo carne)
+    (tiene_tipo pure_de_calabaza verdura)
+    (tiene_tipo ensalada_de_espinacas ensalada)
+    (tiene_tipo pasta_a_escoger_con_salsa_especial pasta)
+    (tiene_tipo canelones_de_salmon_ahumado pasta)
+    (tiene_tipo ensalada_de_arroz_con_legumbres arroz)
+    (tiene_tipo bacalao_a_la_vizcaina pescado)
+    (tiene_tipo pasta_fresca_al_pomodoro pasta)
+    (tiene_tipo ensalada_campera ensalada)
+    (tiene_tipo rissoto_de_setas arroz)
+    (tiene_tipo arroz_tres_delicias arroz)
+    (tiene_tipo fabada_asturiana legumbre)
+    (tiene_tipo sopa_de_galets sopa)
+    (tiene_tipo sardinillas_marinadas pescado)
+    (tiene_tipo sopa_de_verduras sopa)
+    (tiene_tipo caldo_casero sopa)
+    (tiene_tipo tortilla_de_patata huevo)
+    (tiene_tipo ensalada_tropical ensalada)
+    (tiene_tipo sopa_de_caldo sopa)
+    (tiene_tipo estofado_de_ternera sopa)
+    (tiene_tipo macarrones_al_pesto pasta)
+    (tiene_tipo espirales_con_frutos_rojos pasta)
+    (tiene_tipo chuletillas_de_cerdo carne)
+    (tiene_tipo potaje_de_vigilia legumbre)
+    (tiene_tipo arroz_con_conejo arroz)
+    (tiene_tipo ravioli_funghi pasta)
+    (tiene_tipo pastelitos_de_salmon pescado)
+    (tiene_tipo arroz_con_bogavante arroz)
+    (tiene_tipo ensalada_de_garbanzos ensalada)
+    (tiene_tipo ensalada_mediterranea ensalada)
+    (tiene_tipo tortellini_a_la_provenzana pasta)
+    (tiene_tipo merluza_a_la_plancha pescado)
+    (tiene_tipo sepia_en_su_tinta pescado)
+    (tiene_tipo carpaccio_de_ternera carne)
+    (tiene_tipo pure_de_verduras sopa)
+    (tiene_tipo pollo_al_ast carne)
+    (tiene_tipo filete_de_salmon pescado)
+    (tiene_tipo sopa_de_setas sopa)
+    (tiene_tipo rissoto_de_vegetales arroz)
+    (tiene_tipo ensalada_de_pasta_y_verduras pasta)
+    (tiene_tipo ensalada_cesar ensalada)
+    (tiene_tipo arroz_con_lentejas arroz)
+    (tiene_tipo espaguetis_a_la_bolognese pasta)
+    (tiene_tipo arroz_integral_con_quinoa arroz)
+    (tiene_tipo sopa_de_apio sopa)
+    (tiene_tipo entrecot_de_ternera carne)
+    (tiene_tipo huevos_revueltos huevo)
+    (tiene_tipo sopa_de_ajo sopa)
+    (tiene_tipo alitas_de_pollo carne)
+    (tiene_tipo sopa_de_marisco sopa)
+
+
+    ; Dias fijos
+    (plato_fijo carne_rebozada martes)
+    (plato_fijo pastelitos_de_salmon viernes)
+    (plato_fijo canelones_de_salmon_ahumado lunes)
+
+
+    ; Calorias platos
+    (= (calorias_plato arroz_al_curry) 350)
+    (= (calorias_plato fideua_de_pescado) 850)
+    (= (calorias_plato ensalada_con_frutos_secos) 290)
+    (= (calorias_plato lubina_con_albahaca) 750)
+    (= (calorias_plato ensalada_de_moras_y_queso_de_cabra) 350)
+    (= (calorias_plato calamares_a_la_romana) 650)
+    (= (calorias_plato paella_de_pescado) 750)
+    (= (calorias_plato arroz_basmati) 350)
+    (= (calorias_plato albondigas_a_la_jardinera) 750)
+    (= (calorias_plato lasagne_de_espinacas) 550)
+    (= (calorias_plato ensalada_de_la_huerta) 250)
+    (= (calorias_plato ensalada_de_lentejas) 210)
+    (= (calorias_plato pollo_al_limon) 750)
+    (= (calorias_plato pollo_al_chilindron) 750)
+    (= (calorias_plato verduras_a_la_brasa) 250)
+    (= (calorias_plato pies_de_cerdo) 750)
+    (= (calorias_plato pure_de_calabaza) 250)
+    (= (calorias_plato ensalada_de_espinacas) 240)
+    (= (calorias_plato pasta_a_escoger_con_salsa_especial) 450)
+    (= (calorias_plato ensalada_de_arroz_con_legumbres) 350)
+    (= (calorias_plato bacalao_a_la_vizcaina) 750)
+    (= (calorias_plato pasta_fresca_al_pomodoro) 250)
+    (= (calorias_plato ensalada_campera) 250)
+    (= (calorias_plato rissoto_de_setas) 450)
+    (= (calorias_plato arroz_tres_delicias) 450)
+    (= (calorias_plato fabada_asturiana) 750)
+    (= (calorias_plato sopa_de_galets) 250)
+    (= (calorias_plato sardinillas_marinadas) 750)
+    (= (calorias_plato sopa_de_verduras) 250)
+    (= (calorias_plato caldo_casero) 450)
+    (= (calorias_plato tortilla_de_patata) 750)
+    (= (calorias_plato ensalada_tropical) 250)
+    (= (calorias_plato sopa_de_caldo) 550)
+    (= (calorias_plato estofado_de_ternera) 550)
+    (= (calorias_plato macarrones_al_pesto) 450)
+    (= (calorias_plato espirales_con_frutos_rojos) 375)
+    (= (calorias_plato chuletillas_de_cerdo) 750)
+    (= (calorias_plato potaje_de_vigilia) 750)
+    (= (calorias_plato arroz_con_conejo) 450)
+    (= (calorias_plato ravioli_funghi) 450)
+    (= (calorias_plato arroz_con_bogavante) 550)
+    (= (calorias_plato ensalada_de_garbanzos) 150)
+    (= (calorias_plato ensalada_mediterranea) 250)
+    (= (calorias_plato tortellini_a_la_provenzana) 350)
+    (= (calorias_plato merluza_a_la_plancha) 750)
+    (= (calorias_plato sepia_en_su_tinta) 750)
+    (= (calorias_plato carpaccio_de_ternera) 450)
+    (= (calorias_plato pure_de_verduras) 250)
+    (= (calorias_plato pollo_al_ast) 850)
+    (= (calorias_plato filete_de_salmon) 750)
+    (= (calorias_plato sopa_de_setas) 350)
+    (= (calorias_plato rissoto_de_vegetales) 450)
+    (= (calorias_plato ensalada_de_pasta_y_verduras) 250)
+    (= (calorias_plato ensalada_cesar) 250)
+    (= (calorias_plato arroz_con_lentejas) 350)
+    (= (calorias_plato espaguetis_a_la_bolognese) 450)
+    (= (calorias_plato arroz_integral_con_quinoa) 350)
+    (= (calorias_plato sopa_de_apio) 275)
+    (= (calorias_plato entrecot_de_ternera) 850)
+    (= (calorias_plato huevos_revueltos) 750)
+    (= (calorias_plato sopa_de_ajo) 250)
+    (= (calorias_plato alitas_de_pollo) 650)
+    (= (calorias_plato sopa_de_marisco) 350)
+
+
+
+  ) ; Closing :init
+
+  (:goal
+    (forall (?dia - dia) (and (tiene_primero ?dia) (tiene_segundo ?dia)))
+  ) ; Closing :goal
+) ; Closing define

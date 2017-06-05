@@ -1,0 +1,70 @@
+(define (domain ext2_dom)
+  (:requirements :adl :typing :equality)
+
+  (:types
+    ; tipo de platos
+    tipo_plato - object
+    ;base
+    dia - object
+    plato - object
+    ; subtipos de plato
+    primer_plato - plato
+    segundo_plato - plato
+    )
+
+  (:predicates
+    ; el primer plato 'primero' es incompatible con el segundo plato 'segundo'
+    (incompatible ?primero - primer_plato ?segundo - segundo_plato)
+    ; el dia 'dia' tiene como primer plato 'primero' y como segundo 'segundo'
+    (menu_dia ?dia - dia ?primero - primer_plato ?segundo - segundo_plato)
+    ; el dia 'dia' tiene un menu asignado
+    (tiene_menu ?dia - dia)
+    ; el plato 'plato' ya ha sido cocinado esta semana
+    (cocinado ?plato - plato)
+    ; el plato 'plato' tiene tipo 'tipo'
+    (tiene_tipo ?plato - plato ?tipo - tipo_plato)
+    ; el menu del dia 'dia' tiene tipo primero 't_primero' y tipos segundo 't_segundo'
+    (tipo_menu ?dia - dia ?t_primero - tipo_plato ?t_segundo - tipo_plato)
+    ; el dia 'consec' es el dia consecutivo de 'dia'
+    (dia_consecutivo ?dia - dia ?consec - dia)
+    ; el dia 'dia' es el primer dia de la semana
+    (primer_dia ?dia - dia)
+    )
+
+  (:action preparar_menu
+           :parameters (?dia - dia
+                        ?primero - primer_plato
+                        ?segundo - segundo_plato
+                        ?t_primero - tipo_plato
+                        ?t_segundo - tipo_plato
+                        ?anterior - dia
+                        ?t_anterior_primero - tipo_plato
+                        ?t_anterior_segundo - tipo_plato
+                       )
+           :precondition (and
+                           (not (tiene_menu ?dia))
+                           (not (incompatible ?primero ?segundo))
+                           (not (cocinado ?primero))
+                           (not (cocinado ?segundo))
+                           (tiene_tipo ?primero ?t_primero)
+                           (tiene_tipo ?segundo ?t_segundo)
+                           (or
+                             (primer_dia ?dia)
+                             (and
+                               (dia_consecutivo ?anterior ?dia)
+                               (tiene_menu ?anterior)
+                               (tipo_menu ?anterior ?t_anterior_primero ?t_anterior_segundo)
+                               (not (= ?t_primero ?t_anterior_primero))
+                               (not (= ?t_segundo ?t_anterior_segundo))
+                               )
+                           )
+                         )
+           :effect  (and
+                       (tiene_menu ?dia)
+                       (menu_dia ?dia ?primero ?segundo)
+                       (tipo_menu ?dia ?t_primero ?t_segundo)
+                       (cocinado ?primero)
+                       (cocinado ?segundo)
+                    )
+           )
+  )

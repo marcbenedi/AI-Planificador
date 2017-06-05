@@ -1,0 +1,116 @@
+(define (problem ext2_prob)
+    (:domain ext2_dom)
+    (:objects
+    ; Dias de la semana
+    lunes martes miercoles jueves viernes - dia
+
+    ; Primeros platos
+    espaguetis_a_la_bolognese sopa_de_ajo ensalada_cesar sopa_de_caldo canelones_de_salmon_ahumado pasta_a_escoger_con_salsa_especial ensalada_campera macarrones_al_pesto arroz_basmati sopa_de_verduras ensalada_de_pasta_y_verduras ravioli_funghi espirales_con_frutos_rojos ensalada_con_frutos_secos arroz_al_curry tortellini_a_la_provenzana ensalada_de_la_huerta sopa_de_marisco ensalada_de_arroz_con_legumbres ensalada_tropical arroz_con_bogavante pure_de_calabaza pasta_fresca_al_pomodoro sopa_de_apio caldo_casero ensalada_mediterranea ensalada_de_moras_y_queso_de_cabra sopa_de_setas rissoto_de_vegetales arroz_tres_delicias arroz_con_conejo arroz_integral_con_quinoa ensalada_de_espinacas sopa_de_galets rissoto_de_setas arroz_con_lentejas pure_de_verduras estofado_de_ternera lasagne_de_espinacas verduras_a_la_brasa ensalada_de_lentejas ensalada_de_garbanzos - primer_plato
+
+    ; Segundos platos
+    tortilla_de_patata filete_de_salmon carne_rebozada alitas_de_pollo pollo_al_ast sardinillas_marinadas sepia_en_su_tinta entrecot_de_ternera fideua_de_pescado paella_de_pescado albondigas_a_la_jardinera fabada_asturiana pies_de_cerdo merluza_a_la_plancha potaje_de_vigilia lubina_con_albahaca pastelitos_de_salmon carpaccio_de_ternera pollo_al_chilindron calamares_a_la_romana chuletillas_de_cerdo huevos_revueltos pollo_al_limon bacalao_a_la_vizcaina - segundo_plato
+
+    ; Tipos de plato
+    arroz pasta sopa pescado carne ensalada huevo legumbre verdura - tipo_plato
+
+    )
+    (:init
+
+    ; Incompatibilidades
+    (incompatible sopa_de_ajo carne_rebozada)
+    (incompatible pasta_a_escoger_con_salsa_especial sepia_en_su_tinta)
+    (incompatible arroz_integral_con_quinoa fideua_de_pescado)
+    (incompatible sopa_de_marisco sepia_en_su_tinta)
+    (incompatible arroz_al_curry chuletillas_de_cerdo)
+    (incompatible ensalada_de_garbanzos entrecot_de_ternera)
+    (incompatible ensalada_de_la_huerta alitas_de_pollo)
+    (incompatible arroz_con_lentejas tortilla_de_patata)
+    (incompatible ensalada_campera fabada_asturiana)
+    (incompatible ensalada_campera pastelitos_de_salmon)
+
+
+    ; Dia siguiente
+    (primer_dia lunes)
+    (dia_consecutivo lunes martes)
+    (dia_consecutivo martes miercoles)
+    (dia_consecutivo miercoles jueves)
+    (dia_consecutivo jueves viernes)
+    (ultimo_dia viernes)
+
+
+    ; Tipos de plato
+    (tiene_tipo tortilla_de_patata huevo)
+    (tiene_tipo filete_de_salmon pescado)
+    (tiene_tipo carne_rebozada carne)
+    (tiene_tipo alitas_de_pollo carne)
+    (tiene_tipo pollo_al_ast carne)
+    (tiene_tipo espaguetis_a_la_bolognese pasta)
+    (tiene_tipo sopa_de_ajo sopa)
+    (tiene_tipo ensalada_cesar ensalada)
+    (tiene_tipo sopa_de_caldo sopa)
+    (tiene_tipo canelones_de_salmon_ahumado pasta)
+    (tiene_tipo pasta_a_escoger_con_salsa_especial pasta)
+    (tiene_tipo ensalada_campera ensalada)
+    (tiene_tipo macarrones_al_pesto pasta)
+    (tiene_tipo sardinillas_marinadas pescado)
+    (tiene_tipo arroz_basmati arroz)
+    (tiene_tipo sopa_de_verduras sopa)
+    (tiene_tipo ensalada_de_pasta_y_verduras pasta)
+    (tiene_tipo sepia_en_su_tinta pescado)
+    (tiene_tipo ravioli_funghi pasta)
+    (tiene_tipo espirales_con_frutos_rojos pasta)
+    (tiene_tipo entrecot_de_ternera carne)
+    (tiene_tipo ensalada_con_frutos_secos ensalada)
+    (tiene_tipo arroz_al_curry arroz)
+    (tiene_tipo tortellini_a_la_provenzana pasta)
+    (tiene_tipo fideua_de_pescado pescado)
+    (tiene_tipo ensalada_de_la_huerta ensalada)
+    (tiene_tipo sopa_de_marisco sopa)
+    (tiene_tipo paella_de_pescado pescado)
+    (tiene_tipo ensalada_de_arroz_con_legumbres arroz)
+    (tiene_tipo ensalada_tropical ensalada)
+    (tiene_tipo arroz_con_bogavante arroz)
+    (tiene_tipo pure_de_calabaza verdura)
+    (tiene_tipo pasta_fresca_al_pomodoro pasta)
+    (tiene_tipo sopa_de_apio sopa)
+    (tiene_tipo caldo_casero sopa)
+    (tiene_tipo albondigas_a_la_jardinera carne)
+    (tiene_tipo fabada_asturiana legumbre)
+    (tiene_tipo ensalada_mediterranea ensalada)
+    (tiene_tipo ensalada_de_moras_y_queso_de_cabra ensalada)
+    (tiene_tipo pies_de_cerdo carne)
+    (tiene_tipo sopa_de_setas sopa)
+    (tiene_tipo merluza_a_la_plancha pescado)
+    (tiene_tipo potaje_de_vigilia legumbre)
+    (tiene_tipo lubina_con_albahaca pescado)
+    (tiene_tipo rissoto_de_vegetales arroz)
+    (tiene_tipo arroz_tres_delicias arroz)
+    (tiene_tipo pastelitos_de_salmon pescado)
+    (tiene_tipo carpaccio_de_ternera carne)
+    (tiene_tipo pollo_al_chilindron carne)
+    (tiene_tipo calamares_a_la_romana pescado)
+    (tiene_tipo arroz_con_conejo arroz)
+    (tiene_tipo chuletillas_de_cerdo carne)
+    (tiene_tipo huevos_revueltos huevo)
+    (tiene_tipo arroz_integral_con_quinoa arroz)
+    (tiene_tipo ensalada_de_espinacas ensalada)
+    (tiene_tipo pollo_al_limon carne)
+    (tiene_tipo sopa_de_galets sopa)
+    (tiene_tipo bacalao_a_la_vizcaina pescado)
+    (tiene_tipo rissoto_de_setas arroz)
+    (tiene_tipo arroz_con_lentejas arroz)
+    (tiene_tipo pure_de_verduras sopa)
+    (tiene_tipo estofado_de_ternera sopa)
+    (tiene_tipo lasagne_de_espinacas pasta)
+    (tiene_tipo verduras_a_la_brasa verdura)
+    (tiene_tipo ensalada_de_lentejas ensalada)
+    (tiene_tipo ensalada_de_garbanzos ensalada)
+
+
+
+  ) ; Closing :init
+
+  (:goal
+    (forall (?dia - dia) (tiene_menu ?dia))
+  ) ; Closing :goal
+) ; Closing define

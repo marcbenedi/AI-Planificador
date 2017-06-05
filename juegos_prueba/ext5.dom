@@ -1,0 +1,220 @@
+(define (domain ext5_dom)
+  (:requirements :strips :adl :typing :equality)
+
+  (:types
+    ; tipo de platos
+    tipo_plato ;- object
+    ;base
+    dia ;- object
+    plato ;- object
+    ; subtipos de plato
+    primer_plato - plato
+    segundo_plato - plato
+    )
+
+    (:functions
+
+      (calorias_plato ?p - plato)
+      (precio_total)
+
+    )
+
+  (:predicates
+    ; el primer plato 'primero' es incompatible con el segundo plato 'segundo'
+    (incompatible ?primero - primer_plato ?segundo - segundo_plato)
+    ; el dia 'dia' tiene como primer plato 'primero' y como segundo 'segundo'
+    ;(menu_dia ?dia - dia ?primero - primer_plato ?segundo - segundo_plato)
+    ; el dia 'dia' tiene un menu asignado
+    ;(tiene_menu ?dia - dia)
+    ; el plato 'plato' ya ha sido cocinado esta semana
+    (cocinado ?plato - plato)
+    ; el plato 'plato' tiene tipo 'tipo'
+    (tiene_tipo ?plato - plato ?tipo - tipo_plato)
+    ; el menu del dia 'dia' tiene tipo primero 't_primero' y tipos segundo 't_segundo'
+    ;(tipo_menu ?dia - dia ?t_primero - tipo_plato ?t_segundo - tipo_plato)
+    ; el dia 'consec' es el dia consecutivo de 'dia'
+    (dia_consecutivo ?dia - dia ?consec - dia)
+    ; el dia 'dia' es el primer dia de la semana
+    (primer_dia ?dia - dia)
+    (ultimo_dia ?dia - dia)
+    ; el dia 'dia' tiene que tener el plato 'plato'
+    (plato_fijo ?plato - plato ?dia - dia )
+
+    ; el dia 'dia' tiene de primero el plato 'plato'
+    (primero ?dia - dia ?plato - primer_plato)
+    ; el dia 'dia' tiene de segundo el plato 'plato'
+    (segundo ?dia - dia ?plato - segundo_plato)
+
+    (tiene_primero ?dia - dia)
+    (tiene_segundo ?dia - dia)
+
+    (tipo_primero  ?dia - dia ?t - tipo_plato)
+    (tipo_segundo  ?dia - dia ?t - tipo_plato)
+    )
+
+
+  (:action asignar_primero
+    :parameters (?dia - dia
+
+                 ?primero - primer_plato
+                 ?t_primero - tipo_plato
+
+                 ?segundo_ya_asignado - segundo_plato
+
+                 ?anterior - dia
+                 ?siguiente - dia
+
+                 ?t_anterior_primero - tipo_plato
+                 ?t_siguiente_primero - tipo_plato
+                 )
+    :precondition (and
+                      (not (tiene_primero ?dia))
+                      (not (cocinado ?primero))
+                      (tiene_tipo ?primero ?t_primero)
+                      (or
+                        (not (tiene_segundo ?dia))
+                        (and
+                          (not (incompatible ?primero ?segundo_ya_asignado))
+                          (>= (+ (calorias_plato ?primero) (calorias_plato ?segundo_ya_asignado) ) 1000)
+                          (<= (+ (calorias_plato ?primero) (calorias_plato ?segundo_ya_asignado) ) 1500)
+                        )
+                      )
+                      (or
+                        (and
+                          (primer_dia ?dia)
+                          (or
+                            (not (tiene_primero ?siguiente))
+                            (and
+                              (tipo_primero ?siguiente ?t_siguiente_primero)
+                              (not (= ?t_primero ?t_siguiente_primero))
+                            )
+                          )
+                        )
+                        (and
+                          (ultimo_dia ?dia)
+                          (or
+                            (not (tiene_primero ?anterior))
+                            (and
+                              (tipo_primero ?anterior ?t_anterior_primero)
+                              (not (= ?t_primero ?t_anterior_primero))
+                            )
+                          )
+                        )
+                        (and
+                          (dia_consecutivo ?anterior ?dia)
+                          (dia_consecutivo ?dia ?siguiente)
+                          (or
+                            (not (tiene_primero ?anterior))
+                            (and
+                              (tipo_primero ?anterior ?t_anterior_primero)
+                              (not (= ?t_primero ?t_anterior_primero))
+                            )
+                          )
+                          (or
+                            (not (tiene_primero ?siguiente))
+                            (and
+                              (tipo_primero ?siguiente ?t_siguiente_primero)
+                              (not (= ?t_primero ?t_siguiente_primero))
+                            )
+                          )
+                        )
+                      )
+                      (or
+                        (plato_fijo ?primero ?dia)
+                        (not (exists (?p - primer_plato) (plato_fijo ?p ?dia)))
+                      )
+                  )
+    :effect (and
+                (cocinado ?primero)
+                (primero ?dia ?primero)
+                (tiene_primero ?dia)
+                (tipo_primero ?dia ?t_primero)
+                (increase (precio_total) (precio_plato ?primero))
+            )
+
+  )
+
+
+
+  (:action asignar_segundo
+    :parameters (?dia - dia
+
+                 ?segundo - segundo_plato
+
+                 ?t_segundo - tipo_plato
+
+                 ?primero_ya_asignado - primer_plato
+
+                 ?anterior - dia
+                 ?siguiente - dia
+
+                 ?t_anterior_segundo - tipo_plato
+
+                 ?t_siguiente_segundo - tipo_plato
+                 )
+    :precondition (and
+                      (not (tiene_segundo ?dia))
+                      (not (cocinado ?segundo))
+                      (tiene_tipo ?segundo ?t_segundo)
+                      (or
+                        (not (tiene_primero ?dia))
+                        (and
+                          (not (incompatible ?primero_ya_asignado ?segundo))
+                          (>= (+ (calorias_plato ?primero_ya_asignado) (calorias_plato ?segundo) ) 1000)
+                          (<= (+ (calorias_plato ?primero_ya_asignado) (calorias_plato ?segundo) ) 1500)
+                        )
+                      )
+                      (or
+                        (and
+                          (primer_dia ?dia)
+                          (or
+                            (not (tiene_segundo ?siguiente))
+                            (and
+                              (tipo_segundo ?siguiente ?t_siguiente_segundo)
+                              (not (= ?t_segundo ?t_siguiente_segundo))
+                            )
+                          )
+                        )
+                        (and
+                          (ultimo_dia ?dia)
+                          (or
+                            (not (tiene_segundo ?anterior))
+                            (and
+                              (tipo_segundo ?anterior ?t_anterior_segundo)
+                              (not (= ?t_segundo ?t_anterior_segundo))
+                            )
+                          )
+                        )
+                        (and
+                          (dia_consecutivo ?anterior ?dia)
+                          (dia_consecutivo ?dia ?siguiente)
+                          (or
+                            (not (tiene_segundo ?anterior))
+                            (and
+                              (tipo_segundo ?anterior ?t_anterior_segundo)
+                              (not (= ?t_segundo ?t_anterior_segundo))
+                            )
+                          )
+                          (or
+                            (not (tiene_segundo ?siguiente))
+                            (and
+                              (tipo_segundo ?siguiente ?t_siguiente_segundo)
+                              (not (= ?t_segundo ?t_siguiente_segundo))
+                            )
+                          )
+                        )
+                      )
+                      (or
+                        (plato_fijo ?segundo ?dia)
+                        (not (exists (?p - segundo_plato) (plato_fijo ?p ?dia)))
+                      )
+                  )
+    :effect (and
+                (cocinado ?segundo)
+                (segundo ?dia ?segundo)
+                (tiene_segundo ?dia)
+                (tipo_segundo ?dia ?t_segundo)
+                (increase (precio_total) (precio_plato ?segundo))
+            )
+  )
+)
