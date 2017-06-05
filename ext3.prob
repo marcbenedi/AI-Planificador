@@ -1,0 +1,71 @@
+(define (problem ext3_prob)
+    (:domain ext3_dom)
+    (:objects
+    ; Dias de la semana
+    lunes martes miercoles jueves viernes - dia
+
+    ; Primeros platos
+    ravioli_funghi arroz_con_lentejas pasta_fresca_al_pomodoro pure_de_calabaza arroz_al_curry sopa_de_verduras sopa_de_marisco ensalada_cesar ensalada_de_lentejas arroz_tres_delicias macarrones_al_pesto ensalada_de_espinacas sopa_de_galets verduras_a_la_brasa - primer_plato
+
+    ; Segundos platos
+    potaje_casero filete_de_salmon pollo_al_chilindron fabada_asturiana pastelitos_de_salmon pollo_al_limon pollo_al_ast huevos_revueltos sardinillas_marinadas tortilla_de_patata - segundo_plato
+
+    ; Tipos de plato
+    arroz pasta sopa pescado carne ensalada huevo legumbre verdura - tipo_plato
+
+    )
+    (:init
+
+    ; Incompatibilidades
+    ;(incompatible verduras_a_la_brasa pollo_al_ast)
+
+
+    ; Dia siguiente
+    (primer_dia lunes)
+    (dia_consecutivo lunes martes)
+    (dia_consecutivo martes miercoles)
+    (dia_consecutivo miercoles jueves)
+    (dia_consecutivo jueves viernes)
+    (ultimo_dia viernes)
+
+
+    ; Tipos de plato
+    (tiene_tipo ravioli_funghi pasta)
+    (tiene_tipo potaje_casero legumbre)
+    (tiene_tipo arroz_con_lentejas arroz)
+    (tiene_tipo pasta_fresca_al_pomodoro pasta)
+    (tiene_tipo pure_de_calabaza verdura)
+    (tiene_tipo arroz_al_curry arroz)
+    (tiene_tipo sopa_de_verduras sopa)
+    (tiene_tipo filete_de_salmon pescado)
+    (tiene_tipo pollo_al_chilindron carne)
+    (tiene_tipo fabada_asturiana legumbre)
+    (tiene_tipo pastelitos_de_salmon pescado)
+    (tiene_tipo sopa_de_marisco sopa)
+    (tiene_tipo ensalada_cesar ensalada)
+    (tiene_tipo ensalada_de_lentejas ensalada)
+    (tiene_tipo pollo_al_limon carne)
+    (tiene_tipo arroz_tres_delicias arroz)
+    (tiene_tipo pollo_al_ast carne)
+    (tiene_tipo macarrones_al_pesto pasta)
+    (tiene_tipo huevos_revueltos huevo)
+    (tiene_tipo ensalada_de_espinacas ensalada)
+    (tiene_tipo sopa_de_galets sopa)
+    (tiene_tipo sardinillas_marinadas pescado)
+    (tiene_tipo tortilla_de_patata huevo)
+    (tiene_tipo verduras_a_la_brasa verdura)
+
+
+    ; Dias fijos
+    (plato_fijo filete_de_salmon lunes)
+    (plato_fijo arroz_con_lentejas martes)
+    (plato_fijo pasta_fresca_al_pomodoro viernes)
+
+
+
+  ) ; Closing :init
+
+  (:goal
+    (forall (?dia - dia) (and (tiene_primero ?dia) (tiene_segundo ?dia)))
+  ) ; Closing :goal
+) ; Closing define

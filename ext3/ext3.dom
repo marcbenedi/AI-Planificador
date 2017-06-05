@@ -1,12 +1,12 @@
 (define (domain ext3_dom)
-  (:requirements :adl :typing :equality)
+  (:requirements :strips :adl :typing :equality)
 
   (:types
     ; tipo de platos
-    tipo_plato - object
+    tipo_plato ;- object
     ;base
-    dia - object
-    plato - object
+    dia ;- object
+    plato ;- object
     ; subtipos de plato
     primer_plato - plato
     segundo_plato - plato
@@ -40,6 +40,7 @@
 
     (tiene_primero ?dia - dia)
     (tiene_segundo ?dia - dia)
+    
     (tipo_primero  ?dia - dia ?t - tipo_plato)
     (tipo_segundo  ?dia - dia ?t - tipo_plato)
     )
@@ -49,15 +50,14 @@
     :parameters (?dia - dia
 
                  ?primero - primer_plato
-                 ?segundo_ya_asignado - segundo_plato
-
                  ?t_primero - tipo_plato
+
+                 ?segundo_ya_asignado - segundo_plato
 
                  ?anterior - dia
                  ?siguiente - dia
 
                  ?t_anterior_primero - tipo_plato
-
                  ?t_siguiente_primero - tipo_plato
                  )
     :precondition (and
@@ -67,10 +67,6 @@
                       (or
                         (not (tiene_segundo ?dia))
                         (not (incompatible ?primero ?segundo_ya_asignado))
-                      )
-                      (or
-                        (not (exists (?p - plato) (plato_fijo ?p ?dia)))
-                        (plato_fijo ?primero ?dia)
                       )
                       (or
                         (and
@@ -111,6 +107,10 @@
                             )
                           )
                         )
+                      )
+                      (or
+                        (plato_fijo ?primero ?dia)
+                        (not (exists (?p - primer_plato) (plato_fijo ?p ?dia)))
                       )
                   )
     :effect (and
@@ -128,9 +128,10 @@
     :parameters (?dia - dia
 
                  ?segundo - segundo_plato
-                 ?primero_ya_asignado - primer_plato
 
                  ?t_segundo - tipo_plato
+
+                 ?primero_ya_asignado - primer_plato
 
                  ?anterior - dia
                  ?siguiente - dia
@@ -146,10 +147,6 @@
                       (or
                         (not (tiene_primero ?dia))
                         (not (incompatible ?primero_ya_asignado ?segundo))
-                      )
-                      (or
-                        (not (exists (?p - plato) (plato_fijo ?p ?dia)))
-                        (plato_fijo ?segundo ?dia)
                       )
                       (or
                         (and
@@ -190,6 +187,10 @@
                             )
                           )
                         )
+                      )
+                      (or
+                        (plato_fijo ?segundo ?dia)
+                        (not (exists (?p - segundo_plato) (plato_fijo ?p ?dia)))
                       )
                   )
     :effect (and

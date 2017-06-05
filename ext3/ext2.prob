@@ -104,6 +104,6 @@
   ) ; Closing :init
 
   (:goal
-    (forall (?dia - dia) (tiene_menu ?dia))
+    (forall (?dia - dia) (and (tiene_primero ?dia) (tiene_segundo ?dia)))
   ) ; Closing :goal
 ) ; Closing define

@@ -1,0 +1,38 @@
+(define (problem ext1_prob)
+    (:domain ext1_dom)
+    (:objects
+    ; Dias de la semana
+    lunes martes miercoles jueves viernes - dia
+
+    ; Primeros platos
+    arroz_tres_delicias arroz_con_lentejas arroz_al_curry arroz_integral_con_quinoa rissoto_de_setas rissoto_de_vegetales ensalada_de_arroz_con_legumbres arroz_con_bogavante arroz_con_conejo arroz_basmati pasta_fresca_al_pomodoro macarrones_al_pesto ravioli_funghi tortellini_a_la_provenzana espirales_con_frutos_rojos lasagne_de_espinacas canelones_de_salmon_ahumado espaguetis_a_la_bolognese ensalada_de_pasta_y_verduras pasta_a_escoger_con_salsa_especial sopa_de_verduras sopa_de_marisco sopa_de_galets sopa_de_caldo estofado_de_ternera sopa_de_ajo sopa_de_apio pure_de_verduras sopa_de_setas caldo_casero ensalada_cesar ensalada_de_espinacas ensalada_de_lentejas ensalada_de_garbanzos ensalada_campera ensalada_tropical ensalada_mediterranea ensalada_con_frutos_secos ensalada_de_moras_y_queso_de_cabra ensalada_de_la_huerta - primer_plato
+
+    ; Segundos platos
+    pollo_al_limon pollo_al_chilindron pollo_al_ast entrecot_de_ternera chuletillas_de_cerdo carne_rebozada carpaccio_de_ternera alitas_de_pollo albondigas_a_la_jardinera pies_de_cerdo filete_de_salmon pastelitos_de_salmon sardinillas_marinadas merluza_a_la_plancha lubina_con_albahaca bacalao_a_la_vizcaina paella_de_pescado fideua_de_pescado calamares_a_la_romana sepia_en_su_tinta - segundo_plato
+
+    ; Tipos de plato
+    arroz pasta sopa pescado carne ensalada - tipo_plato
+
+    )
+    (:init
+
+    ; Incompatibilidades
+    (incompatible sopa_de_apio paella_de_pescado)
+    (incompatible ensalada_cesar lubina_con_albahaca)
+    (incompatible arroz_con_lentejas pies_de_cerdo)
+    (incompatible ensalada_de_garbanzos carne_rebozada)
+    (incompatible rissoto_de_setas pollo_al_limon)
+    (incompatible sopa_de_apio pies_de_cerdo)
+    (incompatible rissoto_de_setas filete_de_salmon)
+    (incompatible sopa_de_marisco chuletillas_de_cerdo)
+    (incompatible arroz_con_lentejas lubina_con_albahaca)
+    (incompatible canelones_de_salmon_ahumado pollo_al_limon)
+
+
+
+  ) ; Closing :init
+
+  (:goal
+    (forall (?dia - dia) (tiene_menu ?dia))
+  ) ; Closing :goal
+) ; Closing define
